@@ -48,8 +48,11 @@ class WizartListener
 
     public function onKernelRequest(RequestEvent $event)
     {
+        dump("xx");
         if (!$this->enable) return;
+        dump("xx");
         if (!$this->token) return;
+        dump("xx");
 
         $entry_point   = "<script defer type='application/javascript' src='https://d35so7k19vd0fx.cloudfront.net/production/integration/entry-point.min.js'></script>";
         $javascripts = 
