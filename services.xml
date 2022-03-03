@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <defaults public="false" />
+
+        <!-- Twig declarations -->
+        <service id="wizart.twig_extension" class="Wizart\Tech\Twig\WizartTwigExtension" >
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- Service declarations -->
+        <service id="wizart.service" class="Wizart\Tech\Service\WizartService">
+            <argument type="service" id="kernel" />
+        </service>
+
+        <!-- Litener declarations -->
+        <service id="wizart.listener" class="Wizart\Tech\Subscriber\WizartListener">
+            <tag name="kernel.event_listener" event="kernel.request"   method="onKernelRequest" />
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+            <argument type="service" id="parameter_bag" />
+            <argument type="service" id="twig" />
+        </service>
+    </services>
+</container>
