@@ -21,7 +21,8 @@ class WizartListener
     public function __construct(ParameterBagInterface $parameterBag, Environment $twig)
     {
         $this->twig   = $twig;
-
+        dump("heho");
+        
         $this->enable     = $parameterBag->get("wizart.enable");
         $this->autoAppend = $parameterBag->get("wizart.autoappend");
         $this->enable     = $parameterBag->get("wizart.enable");
