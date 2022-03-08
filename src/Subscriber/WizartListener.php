@@ -21,7 +21,6 @@ class WizartListener
     public function __construct(ParameterBagInterface $parameterBag, Environment $twig)
     {
         $this->twig   = $twig;
-        dump("heho");
         
         $this->enable     = $parameterBag->get("wizart.enable");
         $this->autoAppend = $parameterBag->get("wizart.autoappend");
@@ -49,11 +48,8 @@ class WizartListener
 
     public function onKernelRequest(RequestEvent $event)
     {
-        dump("xx");
         if (!$this->enable) return;
-        dump("xx");
         if (!$this->token) return;
-        dump("xx");
 
         $entry_point   = "<script defer type='application/javascript' src='https://d35so7k19vd0fx.cloudfront.net/production/integration/entry-point.min.js'></script>";
         $javascripts = 
@@ -81,8 +77,8 @@ class WizartListener
         if (!$this->allowRender($event)) return false;
 
         $response    = $event->getResponse();
-        $entry_point = $this->twig->getGlobals("wizart")["entry_point"] ?? "";
-        $javascripts   = $this->twig->getGlobals("wizart")["javascripts"] ?? "";
+        $entry_point = $this->twig->getGlobals()["wizart"]["entry_point"] ?? "";
+        $javascripts = $this->twig->getGlobals()["wizart"]["javascripts"] ?? "";
 
         $content = preg_replace([
             '/<\/head\b[^>]*>/',

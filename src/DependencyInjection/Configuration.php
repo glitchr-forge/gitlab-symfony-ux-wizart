@@ -27,7 +27,6 @@ class Configuration implements ConfigurationInterface
 
     private function addGlobalOptionsSection(ArrayNodeDefinition $rootNode)
     {
-        dump("okk");
         $rootNode
             ->children()
                 ->booleanNode('enable')

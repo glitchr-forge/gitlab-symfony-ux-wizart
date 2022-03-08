@@ -10,21 +10,9 @@
  */
 
 namespace Wizart\Tech\Twig;
-use Wizart\Tech\Controller\WizartController;
 
-use Twig\Environment;
-use Twig\TwigFunction;
-use Twig\Extension\GlobalsInterface;
 use Twig\Extension\AbstractExtension;
 
-/**
- * @author Marco Meyer <marco.meyerconde@gmail.com>
- *
- * @final
- * @experimental
- */
-
-use Symfony\Component\DependencyInjection\Container;
 
 class WizartTwigExtension extends AbstractExtension
 {
