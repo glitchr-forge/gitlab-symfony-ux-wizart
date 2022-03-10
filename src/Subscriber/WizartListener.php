@@ -3,13 +3,11 @@
 namespace Wizart\Tech\Subscriber;
 
 use Twig\Environment;
-use Base\Service\BaseService;
-use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
+
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 class WizartListener
 {
@@ -18,14 +16,40 @@ class WizartListener
     private $token;
     private $enable = false;
 
-    public function __construct(ParameterBagInterface $parameterBag, Environment $twig)
+    public function __construct(ParameterBagInterface $parameterBag, Environment $twig, RequestStack $requestStack)
     {
         $this->twig   = $twig;
+        $this->requestStack   = $requestStack;
         
         $this->enable     = $parameterBag->get("wizart.enable");
         $this->autoAppend = $parameterBag->get("wizart.autoappend");
         $this->enable     = $parameterBag->get("wizart.enable");
         $this->token      = $parameterBag->get("wizart.token");
+    }
+
+    public function isProfiler()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $route = $request->get('_route');
+        return $route == "_wdt" || $route == "_profiler";
+    }
+
+    public function isEasyAdmin()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        $controllerAttribute = $request->attributes->get("_controller");
+        $array = is_array($controllerAttribute) ? $controllerAttribute : explode("::", $request->attributes->get("_controller"));
+        $controller = explode("::", $array[0])[0];
+
+        $parents = [];
+        $parent = $controller;
+
+        while(class_exists($parent) && ( $parent = get_parent_class($parent)))
+            $parents[] = $parent;
+
+        $eaParents = array_filter($parents, fn($c) => str_starts_with($c, "EasyCorp\Bundle\EasyAdminBundle"));
+        return !empty($eaParents);
     }
 
     private function allowRender(ResponseEvent $event)
@@ -34,6 +58,12 @@ class WizartListener
             return false;
 
         if (!$this->autoAppend)
+            return false;
+
+        if($this->isEasyAdmin())
+            return false;
+
+        if($this->isProfiler())
             return false;
 
         $contentType = $event->getResponse()->headers->get('content-type');

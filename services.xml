@@ -7,11 +7,6 @@
 
         <defaults public="false" />
 
-        <!-- Twig declarations -->
-        <service id="wizart.twig_extension" class="Wizart\Tech\Twig\WizartTwigExtension" >
-            <tag name="twig.extension" />
-        </service>
-
         <!-- Service declarations -->
         <service id="wizart.service" class="Wizart\Tech\Service\WizartService">
             <argument type="service" id="kernel" />
@@ -23,6 +18,7 @@
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
             <argument type="service" id="parameter_bag" />
             <argument type="service" id="twig" />
+            <argument type="service" id="request_stack" />
         </service>
     </services>
 </container>
