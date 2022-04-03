@@ -78,6 +78,7 @@ class WizartListener
 
     public function onKernelRequest(RequestEvent $event)
     {
+        if (!$event->isMainRequest()) return;
         if (!$this->enable) return;
         if (!$this->token) return;
 
