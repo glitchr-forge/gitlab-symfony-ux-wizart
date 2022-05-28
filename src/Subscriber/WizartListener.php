@@ -5,7 +5,9 @@ namespace Wizart\Tech\Subscriber;
 use Twig\Environment;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -119,7 +121,8 @@ class WizartListener
             "$0" . $javascripts,
         ], $response->getContent(), 1);
 
-        $response->setContent($content);
+        if(!is_instanceof($response, [StreamedResponse::class, BinaryFileResponse::class]))
+            $response->setContent($content);
 
         return true;
     }
