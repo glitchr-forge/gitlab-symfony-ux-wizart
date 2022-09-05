@@ -20,13 +20,9 @@ class WizartListener
 
     public function __construct(ParameterBagInterface $parameterBag, Environment $twig, RequestStack $requestStack)
     {
-        $this->twig   = $twig;
-        $this->requestStack   = $requestStack;
-        
-        $this->enable     = $parameterBag->get("wizart.enable");
-        $this->autoAppend = $parameterBag->get("wizart.autoappend");
-        $this->enable     = $parameterBag->get("wizart.enable");
-        $this->token      = $parameterBag->get("wizart.token");
+        $this->twig         = $twig;
+        $this->requestStack = $requestStack;
+        $this->parameterBag = $parameterBag;
     }
 
     public function isProfiler()
@@ -56,6 +52,9 @@ class WizartListener
 
     private function allowRender(ResponseEvent $event)
     {
+        if (!$event->isMainRequest())
+            return false;
+
         if (!$this->enable)
             return false;
 
@@ -72,20 +71,22 @@ class WizartListener
         if ($contentType && !str_contains($contentType, "text/html"))
             return false;
 
-        if (!$event->isMainRequest())
-            return false;
-        
         return true;
     }
 
     public function onKernelRequest(RequestEvent $event)
     {
         if (!$event->isMainRequest()) return;
+
+        $this->enable     = $this->parameterBag->get("wizart.enable");
         if (!$this->enable) return;
+
+        $this->autoAppend = $this->parameterBag->get("wizart.autoappend");
+        $this->token      = $this->parameterBag->get("wizart.token");
         if (!$this->token) return;
 
         $entry_point   = "<script defer type='application/javascript' src='https://d35so7k19vd0fx.cloudfront.net/production/integration/entry-point.min.js'></script>";
-        $javascripts = 
+        $javascripts =
         "<script type='application/javascript'>
             const WizartVisualizer = function () {
                 const entryPoint = new window.WEntryPoint({
