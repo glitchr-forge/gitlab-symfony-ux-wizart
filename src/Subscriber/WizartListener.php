@@ -88,10 +88,11 @@ class WizartListener
         $entry_point   = "<script defer type='application/javascript' src='https://d35so7k19vd0fx.cloudfront.net/production/integration/entry-point.min.js'></script>";
         $javascripts =
         "<script type='application/javascript'>
-            const WizartVisualizer = function () {
+            const WizartVisualizer = function (sku) {
                 const entryPoint = new window.WEntryPoint({
                     token: '".$this->token."',
-                    element: document.getElementsByTagName('body')[0]
+                    element: document.getElementsByTagName('body')[0],
+                    vendorCode: sku
                 });
                 entryPoint.open();
             };
