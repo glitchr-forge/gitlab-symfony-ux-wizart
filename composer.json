@@ -1,5 +1,5 @@
 {
-    "name": "xkzl/wizart-tech-api",
+    "name": "glitchr/wizart-tech-api",
     "type": "symfony-bundle",
     "description": "Wizart Tech API integration for Symfony",
     "keywords": ["symfony", "wizart", "tech", "api"],
