@@ -1,9 +1,9 @@
 {
-    "name": "glitchr/wizart-tech-api",
+    "name": "glitchr/ux-wizart",
     "type": "symfony-bundle",
     "description": "Wizart Tech API integration for Symfony",
     "keywords": ["symfony", "wizart", "tech", "api"],
-    "homepage": "https://gitlab.glitchr.io/repository-public/symfony/bundles",
+    "homepage": "https://gitlab.glitchr.io/repository-public/symfony/bundles/ux",
     "license": "MIT",
     "authors": [
         {
