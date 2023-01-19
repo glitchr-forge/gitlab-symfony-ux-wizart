@@ -13,11 +13,24 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class WizartListener
 {
-    private $twig;
+    /**
+     * @var Environment
+     */
+    protected $twig;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @var ParameterBagInterface
+     */
+    protected $parameterBag;
 
     private $token;
     private $enable = false;
-
+    protected $autoAppend = false;
     public function __construct(ParameterBagInterface $parameterBag, Environment $twig, RequestStack $requestStack)
     {
         $this->twig         = $twig;
