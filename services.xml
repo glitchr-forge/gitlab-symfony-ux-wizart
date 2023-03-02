@@ -12,6 +12,11 @@
             <argument type="service" id="kernel" />
         </service>
 
+        <service id="wizart.twig" class="Wizart\Tech\Twig\Extension\WizartTwigExtension">
+            <tag name="twig.extension" />
+            <argument type="service" id="parameter_bag" />
+        </service>
+
         <!-- Litener declarations -->
         <service id="wizart.listener" class="Wizart\Tech\Subscriber\WizartListener">
             <tag name="kernel.event_listener" event="kernel.request"   method="onKernelRequest" />
