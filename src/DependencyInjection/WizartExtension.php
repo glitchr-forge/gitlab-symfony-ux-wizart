@@ -1,6 +1,7 @@
 <?php
 
 namespace Wizart\Tech\DependencyInjection;
+
 use Wizart\Tech\Service\WizartService;
 
 use Symfony\Component\Config\FileLocator;
@@ -22,7 +23,7 @@ class WizartExtension extends Extension
     {
         //
         // Load service declaration (includes services, controllers,..)
-        
+
         // Format XML
         $loader = new XmlFileLoader($container, new FileLocator(\dirname(__DIR__, 2).'/config'));
         $loader->load('services.xml');
@@ -41,12 +42,16 @@ class WizartExtension extends Extension
 
     public function setConfiguration(ContainerBuilder $container, array $config, $globalKey = "")
     {
-        foreach($config as $key => $value) {
+        foreach ($config as $key => $value) {
+            if (!empty($globalKey)) {
+                $key = $globalKey.".".$key;
+            }
 
-            if (!empty($globalKey)) $key = $globalKey.".".$key;
-
-            if (is_array($value)) $this->setConfiguration($container, $value, $key);
-            else $container->setParameter($key, $value);
+            if (is_array($value)) {
+                $this->setConfiguration($container, $value, $key);
+            } else {
+                $container->setParameter($key, $value);
+            }
         }
     }
 }

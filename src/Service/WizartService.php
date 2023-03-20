@@ -25,8 +25,17 @@ class WizartService
         $this->token  = $parameterBag->get("wizart.token");
     }
 
-    public function getToken() { return $this->token; }
-    public function setToken($token) { $this->token = $token; }
+    public function getToken()
+    {
+        return $this->token;
+    }
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
 
-    public function isEnabled() { return $this->enable; }
+    public function isEnabled()
+    {
+        return $this->enable;
+    }
 }

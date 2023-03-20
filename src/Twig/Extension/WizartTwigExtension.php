@@ -22,7 +22,10 @@ final class WizartTwigExtension extends AbstractExtension
         $this->parameterBag = $parameterBag;
     }
 
-    public function getName() { return 'wizart_extension'; }
+    public function getName()
+    {
+        return 'wizart_extension';
+    }
     public function getFunctions(): array
     {
         return [
