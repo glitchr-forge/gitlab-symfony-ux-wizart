@@ -19,7 +19,7 @@ class WizartExtension extends Extension
      * {@inheritdoc}
      */
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         //
         // Load service declaration (includes services, controllers,..)
