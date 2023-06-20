@@ -33,8 +33,8 @@ final class WizartTwigExtension extends AbstractExtension
         ];
     }
 
-    public function isReady()
+    public function isReady():bool
     {
-        return $this->parameterBag->get("wizart.token");
+        return $this->parameterBag->get("wizart.token") !== null;
     }
 }
