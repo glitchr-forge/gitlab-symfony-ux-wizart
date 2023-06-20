@@ -35,6 +35,6 @@ final class WizartTwigExtension extends AbstractExtension
 
     public function isReady():bool
     {
-        return $this->parameterBag->get("wizart.token") !== null;
+        return !empty($this->parameterBag->get("wizart.token"));
     }
 }
